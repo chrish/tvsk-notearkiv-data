@@ -36,12 +36,14 @@ jobs:
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
         run: |
           python fetch_from_sheets.py
-      - name: List Files
-        run: ls -la
       - name: Commit and Push Changes
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add spreadsheet_data.json
-          git commit -m "Fetched data from Google Sheets"
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m "Fetched data from Google Sheets"
+            git push
+          else
+            echo "No changes to commit"
+          fi
