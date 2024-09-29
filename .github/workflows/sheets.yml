@@ -1,0 +1,44 @@
+name: Fetch Data from Google Sheets
+
+on:
+  schedule:
+    - cron: '0 20 * * *'  
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-sheets-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          pip install  google-api-python-client google-auth-httplib2 google-auth-oauthlib google-oauth
+
+      - name: Decode and Save Service Account Key
+        run: |
+          echo "$SHEETS_API_KEY" | base64 --decode > service_account.json
+        env:
+          SHEETS_API_KEY: ${{ secrets.SHEETS_API_KEY }}
+
+      - name: Fetch Data from Google Sheets
+        run: |
+          python fetch_from_sheets.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add spreadsheet_data.json
+          git commit -m "Fetched data from Google Sheets"
+          git push
