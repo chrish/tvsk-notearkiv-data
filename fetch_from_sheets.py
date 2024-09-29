@@ -20,7 +20,7 @@ values = result.get('values', [])
 
 # Save the data to a JSON file
 import json
-with open('spreadsheet_data.json', 'w') as f:
-    json.dump(values, f)
+with open('spreadsheet_data.json', 'w', encoding='utf-8') as f:
+    json.dump(values, f, ensure_ascii=False)
 
 print('Data fetched and saved to spreadsheet_data.json')
