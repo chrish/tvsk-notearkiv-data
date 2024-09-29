@@ -32,6 +32,8 @@ jobs:
           SHEETS_API_KEY: ${{ secrets.SHEETS_API_KEY }}
 
       - name: Fetch Data from Google Sheets
+        env: 
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
         run: |
           python fetch_from_sheets.py
 
