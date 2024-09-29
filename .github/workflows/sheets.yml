@@ -36,7 +36,8 @@ jobs:
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
         run: |
           python fetch_from_sheets.py
-
+      - name: List Files
+        run: ls -la
       - name: Commit and Push Changes
         run: |
           git config user.name "GitHub Actions"
