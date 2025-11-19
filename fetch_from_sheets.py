@@ -4,7 +4,7 @@ import os
 
 # Specify the ID of your Google Sheet and the range of data to fetch
 SPREADSHEET_ID = os.environ['GOOGLE_SHEET_ID']
-RANGE_NAME = 'Notearkiv!A1:E1000'  # Adjust the range as needed
+RANGE_NAME = 'Notearkiv!A1:G1500'  # Adjust the range as needed
 
 # Authenticate using the service account
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
